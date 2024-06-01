@@ -52,7 +52,7 @@ export default function Signin() {
 					`}
 				</style>
 			</Head>
-			<main className="bg-white flex items-center justify-center h-full font-inter mt-12 sm:h-screen">
+			<main className="bg-white flex items-center justify-center h-full font-inter mt-12 sm:mt-0 sm:h-screen">
 				<div className="bg-white sm:p-8 xl:w-1/2 sm:w-[60%] xl:-mt-12 w-full flex justify-center select-none">
 					<div className="bg-white sm:p-8 p-6 xl:w-[60%] w-full select-none">
 						<div className="flex flex-col items-center justify-center">
