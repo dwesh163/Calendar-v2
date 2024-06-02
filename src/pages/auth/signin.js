@@ -54,7 +54,7 @@ export default function Signin() {
 			</Head>
 			<main className="bg-white flex items-center justify-center h-full font-inter mt-12 sm:mt-0 sm:h-screen">
 				<div className="bg-white sm:p-8 xl:w-1/2 sm:w-[60%] xl:-mt-12 w-full flex justify-center select-none">
-					<div className="bg-white sm:p-8 p-6 xl:w-[60%] w-full select-none">
+					<div className="bg-white sm:p-8 p-6 xl:w-[65%] w-full select-none">
 						<div className="flex flex-col items-center justify-center">
 							<div className="flex items-center sm:mb-20 mb-8">
 								<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="sm:w-12 sm:h-12 w-8 h-8 -mt-0.5">
@@ -64,35 +64,36 @@ export default function Signin() {
 							</div>
 						</div>
 
-						<h2 className="sm:text-2xl text-xl font-semibold sm:mb-6 mb-3 text-gray-800">Log in with</h2>
-						<div className="flex space-x-4 sm:mb-6 mb-3">
-							<button onClick={() => signIn('google', { callbackUrl: router.query.callbackUrl || '/' })} className="flex items-center justify-center gap-2 w-1/2 py-3 bg-gray-100 hover:bg-gray-200 rounded-md">
-								<img src="/svg/google.svg" alt="Google" className="h-6 w-6" />
+						<h2 className="sm:text-2xl text-lg font-semibold sm:mb-6 mb-1 text-gray-800">Log in with</h2>
+						<div className="flex space-x-4 sm:mb-6 mb-2">
+							<button onClick={() => signIn('google', { callbackUrl: router.query.callbackUrl || '/' })} className="flex items-center justify-center sm:gap-2 gap-1 w-1/2 py-3 bg-gray-100 hover:bg-gray-200 rounded-md">
+								<img src="/svg/google.svg" alt="Google" className="sm:h-6 sm:w-6 h-4 w-4" />
 								<p className="font-bold">Google</p>
 							</button>
-							<button onClick={() => signIn('github', { callbackUrl: router.query.callbackUrl || '/' })} className="flex items-center justify-center gap-2 w-1/2 py-3 bg-gray-100 hover:bg-gray-200 rounded-md">
-								<img src="/svg/github.svg" alt="GitHub" className="h-6 w-6" />
+							<button onClick={() => signIn('github', { callbackUrl: router.query.callbackUrl || '/' })} className="flex items-center justify-center sm:gap-2 gap-1 w-1/2 py-3 bg-gray-100 hover:bg-gray-200 rounded-md">
+								<img src="/svg/github.svg" alt="GitHub" className="sm:h-6 sm:w-6 h-4 w-4" />
 								<p className="font-bold">Github</p>
 							</button>
 						</div>
-						<div className="relative flex sm:py-2 items-center sm:mb-6 mb-3 select-none">
+						<div className="relative flex sm:py-2 items-center sm:mb-6 mb-2 select-none">
 							<div className="flex-grow border-t border-gray-300"></div>
-							<span className="flex-shrink mx-8 font-black font-4xl text-gray-500">OR</span>
+							<span className="flex-shrink sm:mx-8 mx-4 font-black font-4xl text-gray-500">OR</span>
 							<div className="flex-grow border-t border-gray-300"></div>
 						</div>
 						<form onSubmit={handleSubmit}>
-							<div className="sm:mb-4 mb-2">
-								<label htmlFor="email" className="block text-gray-700 font-bold mb-2">
+							<div className="sm:mb-4 mb-3">
+								<label htmlFor="email" className="block text-gray-700 font-bold sm:mb-2 mb-1">
 									Your email
 								</label>
-								<input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-md" placeholder="name@example.com" required />
+								<input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} className={'w-full px-4 py-2 border rounded-md ' + (router.query.error == 'CredentialsSignin' ? 'border-red-300' : 'border-gray-300')} placeholder="name@example.com" required />
+								{router.query.error == 'CredentialsSignin' && <p className="mt-1 text-red-500">Invalid Credentials</p>}
 							</div>
-							<div className="sm:mb-4 mb-2 relative">
-								<label htmlFor="password" className="block text-gray-700 font-bold mb-2">
+							<div className="sm:mb-4 mb-3 relative">
+								<label htmlFor="password" className="block text-gray-700 font-bold sm:mb-2 mb-1">
 									Password
 								</label>
-								<input type={showPassword ? 'text' : 'password'} id="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-md" placeholder="••••••••" required />
-								<button type="button" onClick={handleTogglePassword} className="absolute inset-y-0 h-10 mt-[2.125rem] right-0 pr-3 flex items-center text-gray-500">
+								<input type={showPassword ? 'text' : 'password'} id="password" value={password} onChange={(e) => setPassword(e.target.value)} className={'w-full px-4 py-2 border rounded-md ' + (router.query.error == 'CredentialsSignin' ? 'border-red-300' : 'border-gray-300')} placeholder="••••••••" required />
+								<button type="button" onClick={handleTogglePassword} className="absolute inset-y-0 h-10 sm:mt-[2.125rem] mt-[1.79rem] right-0 pr-3 flex items-center text-gray-500">
 									{showPassword ? (
 										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
 											<path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7 7 0 0 0-2.79.588l.77.771A6 6 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755q-.247.248-.517.486z" />
@@ -106,8 +107,9 @@ export default function Signin() {
 										</svg>
 									)}
 								</button>
+								{router.query.error == 'CredentialsSignin' && <p className="mt-1 text-red-500">Invalid Credentials</p>}
 							</div>
-							<div className="flex items-center justify-end sm:mb-6 mb-3 font-bold">
+							<div className="flex items-center justify-end sm:mb-6 mb-3 font-bold sm:text-base text-sm">
 								<a href="#" className="text-blue-600 hover:underline">
 									Forgot Password?
 								</a>
@@ -116,7 +118,7 @@ export default function Signin() {
 								Log in
 							</button>
 						</form>
-						<p className="sm:mt-6 mt-3 text-center text-gray-700 font-bold">
+						<p className="sm:mt-6 mt-3 text-center text-gray-700 font-bold sm:text-base text-sm">
 							Not registered yet?{' '}
 							<a href="/auth/signup" className="text-blue-600 hover:underline">
 								Create an account
@@ -124,7 +126,7 @@ export default function Signin() {
 						</p>
 					</div>
 				</div>
-				<div className="hidden xl:block xl:w-1/2 h-full">
+				<div className="hidden xl:block xl:w-1/2 h-full select-none">
 					<img src="/signin.jpg" alt="Signin" className="object-cover w-full h-full" />
 				</div>
 			</main>

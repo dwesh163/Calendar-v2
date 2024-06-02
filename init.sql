@@ -18,7 +18,16 @@ CREATE TABLE IF NOT EXISTS users (
 	user_company varchar(30),
 	user_name varchar(150) NOT NULL,
     user_password varchar(255),
+	user_verified BOOLEAN NOT NULL,
 	PRIMARY KEY (user_id)
+);
+
+CREATE TABLE IF NOT EXISTS verification_code (
+	id INT NOT NULL UNIQUE AUTO_INCREMENT,
+	code INT NOT NULL,
+	code_id_public varchar(50) NOT NULL,
+	user_id INT NOT NULL,
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS events (
@@ -37,3 +46,5 @@ CREATE TABLE IF NOT EXISTS events (
 ALTER TABLE calendars ADD CONSTRAINT calendars_fk3 FOREIGN KEY (calendar_user_id) REFERENCES users(user_id);
 
 ALTER TABLE events ADD CONSTRAINT events_fk8 FOREIGN KEY (calendar_id) REFERENCES calendars(calendar_id);
+
+ALTER TABLE verification_code ADD CONSTRAINT verification_code_fk1 FOREIGN KEY (user_id) REFERENCES users(user_id);

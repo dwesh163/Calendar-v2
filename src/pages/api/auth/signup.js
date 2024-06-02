@@ -14,6 +14,10 @@ async function connectMySQL() {
 	}
 }
 
+const generateRandomOTP = () => {
+	return Math.floor(100000 + Math.random() * 900000).toString();
+};
+
 export default async (req, res) => {
 	if (req.method !== 'POST') {
 		return res.status(405).end(); // Method Not Allowed
@@ -36,9 +40,13 @@ export default async (req, res) => {
 
 		const hashedPassword = await bcrypt.hash(password, 10);
 
-		await connection.execute('INSERT INTO users (user_id_public, user_email, user_password, user_name) VALUES (?, ?, ?, ?)', [uuidv4(), email, hashedPassword, name]);
+		await connection.execute('INSERT INTO users (user_id_public, user_email, user_password, user_name, user_verified) VALUES (?, ?, ?, ?, ?)', [uuidv4(), email, hashedPassword, name, 0]);
 
-		res.status(201).json({ message: 'User created' });
+		const id = uuidv4();
+
+		await connection.execute('INSERT INTO verification_code (user_id, code, code_id_public) VALUES ((SELECT user_id FROM users WHERE user_email = ?), ?, ?)', [email, generateRandomOTP(), id]);
+
+		res.status(201).json({ message: 'User created', otpId: id });
 	} catch (error) {
 		console.error('Error during user sign-up:', error);
 		res.status(500).json({ message: 'Internal server error' });
