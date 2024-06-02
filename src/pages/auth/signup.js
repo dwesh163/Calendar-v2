@@ -64,9 +64,17 @@ const StepOTP = ({ otp, setOtp, email, summitOtp }) => {
 
 		if (e.key === 'Delete' || e.key === 'Backspace') {
 			if (index > 0) {
-				inputsRef.current[index - 1].value = '';
-				inputsRef.current[index - 1].focus();
+				if (index === inputsRef.current.length - 1 && inputsRef.current[index].value != '') {
+					inputsRef.current[index].value = '';
+				} else {
+					inputsRef.current[index - 1].value = '';
+					inputsRef.current[index - 1].focus();
+				}
 			}
+		}
+
+		if (index === inputsRef.current.length - 1 && e.key == 'Enter') {
+			summitOtp();
 		}
 	};
 
